@@ -1,11 +1,11 @@
 
 def sale_function():
-    import sale
+    import Primary.sale as sale
     sale
 
 def admin_function():
-    import admin
-    admin
+    import Primary.admin as admin
+    admin.admin()
 
 def main_menu():
 
