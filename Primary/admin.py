@@ -11,6 +11,7 @@ def stock_function():
     import Admin.stock_A as stock_A
     stock_A
 
+
 def admin():
     if True:
         while True:

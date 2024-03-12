@@ -1,15 +1,17 @@
-Category,Item,Price
-Workwear,Pants,5
-Workwear,Shirt,3
-Business Attire,Suit,10
-Business Attire,Blouse,4
-Casual Clothes,T-shirt,2
-Casual Clothes,Jeans,4
-Linen,Towels,3.50
-Linen,Bedsheets,5
-Electrical Items,Toaster,15
-Electrical Items,Coffee Maker,20
-Kitchen Utensils and Crockery,Plates,2
-Kitchen Utensils and Crockery,Cutlery Set,7
-Homewares,Photo Frame,3
-Homewares,Storage Box,6
+Category,Item,Price,Stock
+Business Attire,Blouse,4,1
+Business Attire,Suit,10,1
+Casual Clothes,Jeans,4,3
+Casual Clothes,T-shirt,2,2
+Electrical Items,Coffee Maker,20,7
+Electrical Items,Toaster,15,6
+Homewares,Photo Frame,3,9
+Homewares,Storage Box,6,7
+Kitchen Utensils and Crockery,Cutlery Set,7,9
+Kitchen Utensils and Crockery,Plates,2,8
+Linen,Bedsheets,5,4
+Linen,Handcloth,4.50,
+Linen,Pillow Case,5,
+Linen,Towels,3.50,2
+Workwear,Pants,5,1
+Workwear,Shirt,5.00,1
