@@ -11,9 +11,13 @@ def stock_function():
     import Admin.stock_A as stock_A
     stock_A
 
+def clear_terminal():
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def admin():
     if True:
+        clear_terminal()
         while True:
             print("\nAdmin:")
             print("1. Edit Items")
@@ -22,6 +26,7 @@ def admin():
             print("4. Exit")
 
             choice = input("Enter your choice (1/2/3/4): ")
+            clear_terminal()
 
             if choice == '1':
                 edit_items_function()
@@ -38,3 +43,5 @@ def admin():
                 break
             else:
                 print("Invalid choice. Please enter 1, 2, 3, or 4.")
+
+admin()

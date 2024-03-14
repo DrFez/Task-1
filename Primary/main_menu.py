@@ -5,7 +5,7 @@ def sale_function():
 
 def admin_function():
     import Primary.admin as admin
-    admin.admin()
+    admin()
 
 def main_menu():
 
@@ -17,7 +17,7 @@ def main_menu():
             print("3. Exit")
 
             choice = input("Enter your choice (1/2/3): ")
-
+            clear_terminal()
             if choice == '1':
                 sale_function()
                 break
@@ -30,6 +30,10 @@ def main_menu():
             else:
                 print("Invalid choice. Please enter 1, 2, or 3.")
 
+def clear_terminal():
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')
 
+main_menu()
 
 

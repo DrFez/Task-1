@@ -1,6 +1,7 @@
 Category,Item,Price,Stock
 Business Attire,Blouse,4,1
-Business Attire,Suit,10,1
+Business Attire,Suit,100,1
+Business Attire,Tie,8,5
 Casual Clothes,Jeans,4,3
 Casual Clothes,T-shirt,2,2
 Electrical Items,Coffee Maker,20,7

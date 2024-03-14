@@ -1,6 +1,7 @@
 import os
 import csv
-import curses
+
+
 
 # What this file does:
 # This file allows the admin to view, add, delete, and edit items in the items.csv file.
@@ -188,6 +189,24 @@ def view_all_items():
             f"{price}{RESET}")
 
 
+def navigate_to_primary_admin_script():
+    # Get the path of the "Primary" directory relative to the current script's directory
+    primary_path = os.path.join(os.path.dirname(__file__), "../Primary/admin.py")
+    print(f"Primary path: {primary_path}")  # Debug print
+
+    try:
+        # Check if the primary admin script file exists
+        if os.path.exists(primary_path):
+            # Execute the primary admin script
+            with open(primary_path) as file:
+                code = file.read()
+                exec(code)
+        else:
+            print("Primary admin script not found.")
+    except Exception as e:
+        print(f"Error occurred: {e}")
+
+
 def items_menu():
     while True:
         clear_terminal()
@@ -211,8 +230,7 @@ def items_menu():
         elif choice == '4':
             edit_item()
         elif choice == '5':
-            print("Exiting items menu.")
-            break
+            navigate_to_primary_admin_script()
         else:
             print("\n\033[1mInvalid choice. Please enter a number from 1 to 5.\033[0m\n")
 
