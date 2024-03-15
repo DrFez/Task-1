@@ -11,6 +11,7 @@ def main_menu():
 
     if True:
         while True:
+            clear_terminal()
             print("\nMain Menu:")
             print("1. Sale")
             print("2. Admin")
@@ -34,6 +35,8 @@ def clear_terminal():
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
 main_menu()
+
 
 

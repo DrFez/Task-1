@@ -58,10 +58,16 @@ def edit_stock(item_name, new_stock):
             items.append((row['Category'], row['Item'], row['Price'], row['Stock']))
 
     # Find the item to edit and change the stock
+    found_item = False
     for i in range(len(items)):
         if items[i][1] == item_name:
             items[i] = (items[i][0], items[i][1], items[i][2], new_stock)
+            found_item = True
             break
+
+    if not found_item:
+        print(f"Item '{item_name}' not found.")
+        return
 
     # Adds the headers to the top of the file
     with open(temp_file_path, 'w', newline='') as csvfile:
@@ -81,6 +87,8 @@ def edit_stock(item_name, new_stock):
     # Replace the original file with the temporary file
     os.remove(file_path)
     os.rename(temp_file_path, file_path)
+
+    print(f"Stock for item '{item_name}' has been updated to '{new_stock}'.")
 
 def view_items_in_category():
     # Ask the user which category they want to view, whilst also printing all current categories
@@ -143,7 +151,7 @@ def view_items_in_category():
                 stock = row['Stock']
                 print(f"{category_name.ljust(max_category_length + 1)}",
                     f"{item_name.ljust(max_item_length + 1)}",
-                    f"{stock}")
+                    f"     {stock}")
 
 # Prints the stock using same format as edit_items_A from the items.csv file (Category, Item, Stock)
 def print_all_stock():
@@ -204,7 +212,7 @@ def print_all_stock():
         color = category_colors[category] 
         print(f"{color}{category.ljust(max_category_length + 1)}{RESET}",
             f"{item_name.ljust(max_item_length + 1)}",
-            f"{stock}{RESET}")
+            f"     {stock}{RESET}")
 
 # Ask the user if they to view all stock or stock in a specific category
 def print_stock():
@@ -251,24 +259,58 @@ def view_stock():
     clear_terminal()
     print_stock()
     while True:
-        user_input = input("\nType '1' or click enter to return to the menu: ")
+        user_input = input("\nType '1' or click enter to return to the menu or enter an item name to edit its stock: ")
         clear_terminal()
         sort_items()
         if user_input.lower() == '1' or user_input == '':
             break
+        else: 
+            edit_stock_name = user_input
+            edit_stock_amount = input("Enter the new stock amount: ")
+            # Calls the edit_stock function with the item name and new stock amount as arguments
+            edit_stock(edit_stock_name, edit_stock_amount)
 
 def manage_stock():
     clear_terminal()
-
-    edit_stock_name = input("Enter the name of the item you want to edit: ")
-    edit_stock_amount = input("Enter the new stock amount: ")
-    edit_stock(edit_stock_name, edit_stock_amount)
-    while True:
-        user_input = input("\nType '1' or click enter to return to the menu: ")
+    #Ask the user if they want to view all items first through input
+    view_all_items = input("Do you want to view items first?\n1. Yes \n2. No\n3. Exit\nEnter your choice: ")
+    if view_all_items.lower() == '1':
+        print_all_stock()
+    elif view_all_items.lower() == '3':
         clear_terminal()
-        sort_items()
-        if user_input.lower() == '1' or user_input == '':
+        menu()
+    
+    # Asks the user if they want to change the stock of a single item or multiple items
+    while True:
+        clear_terminal()
+        print("Do you want to edit the stock of a single item or multiple items?")
+        print("1. Single Item")
+        print("2. Multiple Items")
+        print("3. Exit")
+        choice = input("Enter your choice: ")
+        clear_terminal()
+        if choice == "2":
+            # Asks for the name of the items in the format "Item1 Stock, Item2 Stock, Item3 Stock, etc."
+            items = input("Enter the name of the items you want to edit and their new stock amount in the format 'Item1 Stock, Item2 Stock, Item3 Stock, etc.': ")
+            # Runs edit_stock for each item in the list
+            for item in items.split(", "):
+                item_name, stock = item.split(" ")
+                edit_stock(item_name, stock)
             break
+        # Elif choice is not 1 2 or 3, print invalid choice and ask again
+        elif choice != "1" and choice != "2" and choice != "3":
+            print("Invalid choice. Please try again.")
+        else:
+            edit_stock_name = input("Enter the name of the item you want to edit: ")
+            edit_stock_amount = input("Enter the new stock amount: ")
+            # Calls the edit_stock function with the item name and new stock amount as arguments
+            edit_stock(edit_stock_name, edit_stock_amount)
+            while True:
+                user_input = input("\nType '1' or click enter to return to the menu: ")
+                clear_terminal()
+                sort_items()
+                if user_input.lower() == '1' or user_input == '':
+                    break
 
 sort_items()
 menu()

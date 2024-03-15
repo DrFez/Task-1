@@ -1,11 +1,11 @@
 Category,Item,Price,Stock
 Business Attire,Blouse,4,1
 Business Attire,Suit,100,1
-Business Attire,Tie,8,5
+Business Attire,Tie,8,6
 Casual Clothes,Jeans,4,3
 Casual Clothes,T-shirt,2,2
 Electrical Items,Coffee Maker,20,7
-Electrical Items,Toaster,15,6
+Electrical Items,Toaster,15,3
 Homewares,Photo Frame,3,9
 Homewares,Storage Box,6,7
 Kitchen Utensils and Crockery,Cutlery Set,7,9
@@ -14,5 +14,5 @@ Linen,Bedsheets,5,4
 Linen,Handcloth,4.50,
 Linen,Pillow Case,5,
 Linen,Towels,3.50,2
-Workwear,Pants,5,1
-Workwear,Shirt,5.00,1
+Workwear,Pants,5,438
+Workwear,Shirt,5.00,10
