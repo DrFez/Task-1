@@ -25,7 +25,7 @@ def sort_items():
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            items.append((row['Category'], row['Item'], row['Price'], row['Stock']))
+            items.append((row['Category'], row['Item'], row['Price'], row['Stock'], row['Code']))
 
     # Sort the list of items
     items.sort()
@@ -33,7 +33,7 @@ def sort_items():
     # Adds the headers to the top of the file
     with open(temp_file_path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Category', 'Item', 'Price', 'Stock'])
+        writer.writerow(['Category', 'Item', 'Price', 'Stock', 'Code'])
         for item in items:
             writer.writerow(item)
 
@@ -60,7 +60,8 @@ def print_prices():
     elif choice.lower() == '3':
         items_menu()
     else:
-        print("\n\033[1mInvalid choice. Please enter '1' for All items or '2' for Specific category.\033[0m\n")
+        print("\n\033[1mInvalid choice. Please enter '1' for All items or '2' for Specific category.\033[0m")
+        print("\033[0m" + """""")
         print_prices()
 
 def view_items_in_category():
@@ -189,24 +190,6 @@ def view_all_items():
             f"{price}{RESET}")
 
 
-def navigate_to_primary_admin_script():
-    # Get the path of the "Primary" directory relative to the current script's directory
-    primary_path = os.path.join(os.path.dirname(__file__), "../Primary/admin.py")
-    print(f"Primary path: {primary_path}")  # Debug print
-
-    try:
-        # Check if the primary admin script file exists
-        if os.path.exists(primary_path):
-            # Execute the primary admin script
-            with open(primary_path) as file:
-                code = file.read()
-                exec(code)
-        else:
-            print("Primary admin script not found.")
-    except Exception as e:
-        print(f"Error occurred: {e}")
-
-
 def items_menu():
     while True:
         clear_terminal()
@@ -230,9 +213,11 @@ def items_menu():
         elif choice == '4':
             edit_item()
         elif choice == '5':
-            navigate_to_primary_admin_script()
+            import admin
+            admin.admin_menu()
         else:
-            print("\n\033[1mInvalid choice. Please enter a number from 1 to 5.\033[0m\n")
+            print("\n\033[1mInvalid choice. Please enter a number from 1 to 5.\033[0m")
+            print("\033[0m" + """""")
 
 
 
@@ -276,13 +261,35 @@ def add_new_item():
         print("Item already exists in the category.")
         return
     else:
+        # Ask for price, stock
         price = input("Enter the price: ")
+        stock = input("Enter the stock: ")
+        # Ask do you wish for a custom code or the system to generate one
+        ask_code = input("Do you want to enter a custom code?\n1. Yes \n2. No \n")
+        if ask_code == '1':
+            code = input("Enter the code: ")
+            # Checks if the code is already in the file
+            with open(file_path, newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if row['Code'] == code:
+                        print("Code already exists in the file.")
+                        return
+            
+        elif ask_code == '2':
+            # Starts at 1 and checks if the code is already in the file. If it is, it adds 1 to the code and checks again
+            code = 1
+            with open(file_path, newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if row['Code'] == str(code):
+                        code += 1
 
     # Append the data to the CSV file
     file_path = os.path.join('CSV_Files', 'items.csv')
     with open(file_path, 'a', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow([category, item, price])
+        writer.writerow([category, item, price, stock, code])
 
     print(f"Item '{item}' added successfully.")
     
@@ -303,7 +310,8 @@ def delete_item_or_category():
     elif choice.lower() == '3':
         items_menu()
     else:
-        print("\n\033[1mInvalid choice. Please enter 'item' or 'category'.\033[0m\n")
+        print("\n\033[1mInvalid choice. Please enter 'item' or 'category'.\033[0m")
+        print("\033[0m" + """""")
         delete_item_or_category()
 
 
@@ -386,7 +394,8 @@ def edit__exist_item():
     elif choice.lower() == '3':
         items_menu()
     else:
-        print("\n\033[1mInvalid choice. Please enter '1' for Name or '2' for Price.\033[0m\n")
+        print("\n\033[1mInvalid choice. Please enter '1' for Name or '2' for Price.\033[0m")
+        print("\033[0m" + """""")
         edit__exist_item()
 
 def edit_item_name(old_name, new_name):

@@ -21,7 +21,7 @@ def sort_items():
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            items.append((row['Category'], row['Item'], row['Price'], row['Stock']))
+            items.append((row['Category'], row['Item'], row['Price'], row['Stock'], row['Code']))
 
     # Sort the list of items
     items.sort()
@@ -29,7 +29,7 @@ def sort_items():
     # Adds the headers to the top of the file
     with open(temp_file_path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Category', 'Item', 'Price', 'Stock'])
+        writer.writerow(['Category', 'Item', 'Price', 'Stock', 'Code'])
         for item in items:
             writer.writerow(item)
 
@@ -55,13 +55,13 @@ def edit_stock(item_name, new_stock):
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            items.append((row['Category'], row['Item'], row['Price'], row['Stock']))
+            items.append((row['Category'], row['Item'], row['Price'], row['Stock'], row['Code']))
 
     # Find the item to edit and change the stock
     found_item = False
     for i in range(len(items)):
         if items[i][1] == item_name:
-            items[i] = (items[i][0], items[i][1], items[i][2], new_stock)
+            items[i] = (items[i][0], items[i][1], items[i][2], new_stock, items[i][4])
             found_item = True
             break
 
@@ -72,7 +72,7 @@ def edit_stock(item_name, new_stock):
     # Adds the headers to the top of the file
     with open(temp_file_path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Category', 'Item', 'Price', 'Stock'])
+        writer.writerow(['Category', 'Item', 'Price', 'Stock', 'Code'])
         for item in items:
             writer.writerow(item)
 
@@ -90,7 +90,13 @@ def edit_stock(item_name, new_stock):
 
     print(f"Stock for item '{item_name}' has been updated to '{new_stock}'.")
 
+amount_printed = ""
+
 def view_items_in_category():
+
+    # Import amount_printed from global scope
+    global amount_printed
+
     # Ask the user which category they want to view, whilst also printing all current categories
     categories = []
     file_path = os.path.join('CSV_Files', 'items.csv')
@@ -107,10 +113,11 @@ def view_items_in_category():
     # Asks the user to input the number of the category they want to view
     category_number = input("Enter the number of the category you want to view: ")
     if category_number == 'exit':
-        menu()
+        stock_menu()
     clear_terminal()
     # Make chosen category the correspondent of the number chosen
     category = categories[int(category_number) - 1]
+    amount_printed = category
 
 
     # Prints the items in only that category with the format Category, Item, Stock
@@ -155,6 +162,11 @@ def view_items_in_category():
 
 # Prints the stock using same format as edit_items_A from the items.csv file (Category, Item, Stock)
 def print_all_stock():
+
+    # Import amount_printed from global scope
+    global amount_printed
+    amount_printed = "all"
+
     file_path = os.path.join('CSV_Files', 'items.csv')
     if not os.path.exists(file_path):
         print(f"Error: File '{file_path}' not found.")
@@ -231,12 +243,13 @@ def print_stock():
             view_items_in_category()
             break
         elif choice == '3':
-            break
+            stock_menu()
         else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
+            print("\033[1m" + "Invalid choice. Please enter 1, 2, or 3.")
+            print("\033[0m" + """""")
 
 # Function Menu (View Stock, Manage Stock, Exit)
-def menu():
+def stock_menu():
     while True:
         
         print("Stock Management Menu:")
@@ -251,9 +264,11 @@ def menu():
         elif choice == "2":
             manage_stock()
         elif choice == "3":
-            break
+            import admin
+            admin.admin_menu()
         else:
-            print("Invalid choice. Please try again.")
+            print("\033[1m" + "Invalid choice. Please enter 1, 2, or 3.")
+            print("\033[0m" + """""")
 
 def view_stock():
     clear_terminal()
@@ -278,7 +293,7 @@ def manage_stock():
         print_all_stock()
     elif view_all_items.lower() == '3':
         clear_terminal()
-        menu()
+        stock_menu()
     
     # Asks the user if they want to change the stock of a single item or multiple items
     while True:
@@ -299,7 +314,9 @@ def manage_stock():
             break
         # Elif choice is not 1 2 or 3, print invalid choice and ask again
         elif choice != "1" and choice != "2" and choice != "3":
-            print("Invalid choice. Please try again.")
+            #In Bold
+            print("\033[1m" + "Invalid choice. Please enter 1, 2, or 3.")
+            print("\033[0m" + """""")
         else:
             edit_stock_name = input("Enter the name of the item you want to edit: ")
             edit_stock_amount = input("Enter the new stock amount: ")
@@ -313,6 +330,6 @@ def manage_stock():
                     break
 
 sort_items()
-menu()
+
 
 

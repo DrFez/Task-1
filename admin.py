@@ -1,26 +1,28 @@
 
 def edit_items_function():
-    import Admin.edit_items_A as edit_items_A
-    edit_items_A
+    import edit_items_A
+    edit_items_A.items_menu()
 
 def receipts_function():
-    import Admin.receipt_A as receipt_A
+    import receipt_A
     receipt_A
 
 def stock_function():
-    import Admin.stock_A as stock_A
-    stock_A
+    import stock_A
+    stock_A.stock_menu()
 
 def clear_terminal():
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def admin():
+def admin_menu():
     if True:
         clear_terminal()
         while True:
-            print("\nAdmin:")
-            print("1. Edit Items")
+            #Prints Admin in purple
+            print("\033[35m" + "Admin Menu:")
+            #Prints Edit Items in white
+            print("\033[37m" + "1. Edit Items")
             print("2. Receipts")
             print("3. Stock")
             print("4. Exit")
@@ -38,10 +40,11 @@ def admin():
                 stock_function()
                 break
             elif choice == '4':
-                import Primary.main_menu as main_menu
+                import main_menu
                 main_menu.main_menu()
                 break
             else:
-                print("Invalid choice. Please enter 1, 2, 3, or 4.")
+                print("\033[1m" + "Invalid choice. Please enter 1, 2, or 3.")
+                print("\033[0m" + """""")
 
-admin()
+admin_menu()
