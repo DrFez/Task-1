@@ -4,6 +4,7 @@ import os
 import sys
 import time
 import csv
+import os
 
 # Function to clear the terminal
 def clear_terminal():
@@ -31,12 +32,11 @@ def process_sale():
 
     # Sets the total price to whatever OutFun_total_price is *Note OutFun_total_price is not in function
     total_price = OutFun_total_price
+    total_price = 0
     items = OutFun_items
     quantities = OutFun_quantities
     prices = OutFun_prices
 
-
-    
     # Ask the user for the name or code of the item
     while True:
         clear_terminal()
@@ -48,20 +48,24 @@ def process_sale():
         print("New Sale")
         print("--------")
 
-        # If n of items is >1 Print the items list header (Name, Quantity, Price, Total Price)
-        if len(items) > 0:
-            print("\nItems")
-            print("-----")
-            print("Name\t\tQuantity\tPrice\t\tTotal Price")
-            # For every item in the list of items
-            for i in range(len(items)):
-                # Print the items name, quantity, price and total price
-                print(f"{items[i][1]}\t\t{quantities[i]}\t\t{items[i][4]}\t\t{quantities[i] * float(items[i][4])}")
-                # Add the total price of the item to the total price
-                total_price += quantities[i] * float(items[i][4])
-            # Print the total price in bold 
-            print("\033[1m" + f"Total Price: {total_price}")
-            print("\033[0m" + """""")
+        # Initialize total price to 0 at the start of each new sale
+        total_price = 0
+
+        # Headings
+        print("\nItems")
+        print("-----")
+        print("Name\t\tQuantity\tPrice\t\tTotal Price")
+
+        # For every item in the list of items
+        for i in range(len(items)):
+            # Print the items name, quantity, price and total price
+            print(f"{items[i][1]}\t\t{quantities[i]}\t\t{items[i][4]}\t\t{quantities[i] * float(items[i][4])}")
+            # Calculate the total price of the item and add it to the total price
+            item_total_price = quantities[i] * float(items[i][4])
+            total_price += item_total_price
+        # Print the total price in bold
+        print("\033[1m" + f"Total Price: {total_price}")
+        print("\033[0m" + "")
 
 
         item = input("Enter the name or code of the item or 'done' once finished, or type exit: ")
@@ -131,7 +135,7 @@ def process_sale():
                             # Write the items name, quantity, price and total price to the file
                             writer.writerow([items[i][1], quantities[i], items[i][4], quantities[i] * float(items[i][4])])
                         # Calculate and write GST (10% of the total price) to the file
-                        gst = total_price * 0.1
+                        gst = round(total_price * 0.1, 2)
                         writer.writerow([])  # Empty row for spacing
                         writer.writerow([f"GST: ${gst}"])
                         # Write the total price to the file
