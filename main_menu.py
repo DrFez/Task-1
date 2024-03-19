@@ -1,7 +1,7 @@
 
 def sale_function():
-    import sale
-    sale
+    import sale_GUI
+    sale_GUI.process_sale()
 
 def admin_function():
     import admin

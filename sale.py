@@ -141,10 +141,12 @@ def process_sale():
                         # Write the total price to the file
                         writer.writerow([f"Total Price: {total_price}"])
                         # Write the payment method to the file
-                        if payment == '1':
+                        if payment.get() == 1:
                             writer.writerow(["Payment: Cash"])
-                        else:
+                        elif payment.get() == 2:
                             writer.writerow(["Payment: Card"])
+                        else:
+                            writer.writerow(["Payment: Unknown"])
 
                     # Print the receipt file name
                     print(f"Receipt saved as: {receipt_filename}")
