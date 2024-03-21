@@ -1,0 +1,8 @@
+Date and Time: 2024-03-21 10:52:35
+
+Items
+Name,Quantity,Price,Total Price
+tIe,2,3.0,6.0
+
+GST: $0.6
+Total Price: $6.0

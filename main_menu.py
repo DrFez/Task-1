@@ -7,44 +7,51 @@ def admin_function():
     import admin
     admin.admin_menu()
 
+import tkinter as tk
+from tkinter import messagebox
+
 def main_menu():
+    def handle_sale():
+        sale_function()
 
-    if True:
-        while True:
-            #Prints Main Menu in BIG BOLD white
-            print("\033[1m" + "Main Menu:")
-            #Prints Sale in green
-            print("\033[32m" + "1. Sale")
-            #Prints Admin in purple
-            print("\033[35m" + "2. Admin")
-            #Prints Exit in red
-            print("\033[31m" + "3. Exit")
-            #Prints Enter your choice in white removing the bold
-            choice = input("\033[0m" + "Enter your choice (1/2/3): ")
+    def handle_admin():
+        admin_function()
 
-            clear_terminal()
-            if choice == '1':
-                sale_function()
-                break
-            elif choice == '2':
-                admin_function()
-                break
-            elif choice == '3':
-                print("Exiting program. Goodbye!")
-                #Shut down Program compltelty 
-                import sys
-                sys.exit()
-            else:
-                #In Bold
-                print("\033[1m" + "Invalid choice. Please enter 1, 2, or 3.\n")
-                print("\033[0m" + """\n""")
+    def handle_exit():
+        if messagebox.askyesno("Exit", "Are you sure you want to exit?\nThis will close the whole program.\nIncluding any other windows that are open."):
+            root.destroy()
+            # Close the entire program
+            import sys
+            sys.exit()
 
-def clear_terminal():
-    import os
-    os.system('cls' if os.name == 'nt' else 'clear')
+    # Create the main menu window
 
-clear_terminal()
+    root = tk.Tk()
+    root.title("Main Menu")
+
+    # Bring the window to the front
+    root.attributes('-topmost', 1)
+    root.after_idle(root.attributes, '-topmost', 0)
+
+
+    # Make the window a fixed size and center it on the screen
+    root.geometry("300x200")
+    root.resizable(False, False)
+    root.eval('tk::PlaceWindow . center')
+
+
+    label = tk.Label(root, text="Main Menu:", font=("Arial", 16, "bold"))
+    label.pack()
+
+    button_sale = tk.Button(root, text="Sale", command=handle_sale, bg="green", fg="white", width=10, height=2)
+    button_sale.pack(pady=10)
+
+    button_admin = tk.Button(root, text="Admin", command=handle_admin, bg="purple", fg="white", width=10, height=2)
+    button_admin.pack(pady=10)
+
+    button_exit = tk.Button(root, text="Exit", command=handle_exit, bg="red", fg="white", width=10, height=2)
+    button_exit.pack(pady=10)
+
+    root.mainloop()
+
 main_menu()
-
-
-

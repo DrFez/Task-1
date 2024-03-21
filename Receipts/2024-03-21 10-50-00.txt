@@ -1,0 +1,9 @@
+Date and Time: 2024-03-21 10:50:00
+
+Items
+Name,Quantity,Price,Total Price
+T-shirt,2,5.0,10.0
+
+GST: $1.0
+Total Price: $10.0
+Payment: Cash

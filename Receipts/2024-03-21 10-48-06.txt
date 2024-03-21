@@ -1,0 +1,9 @@
+Date and Time: 2024-03-21 10:48:06
+
+Items
+Name,Quantity,Price,Total Price
+Tie,3,3.0,9.0
+
+GST: $0.9
+Total Price: $9.0
+Payment: Cash

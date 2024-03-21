@@ -1,11 +1,12 @@
 Category,Item,Price,Stock,Code
 Business Attire,Blouse,4,1,1
 Business Attire,Suit,100,1,2
-Business Attire,Tie,8,4,3
+Business Attire,Tie,5,4,3
 Casual Clothes,Jeans,4,3,4
-Casual Clothes,T-shirt,2,2,5
+Casual Clothes,T-shirt,2,1,5
 Electrical Items,Coffee Maker,20,7,6
 Electrical Items,Toaster,15,3,7
+Homewares,Lamp,5,2,18
 Homewares,Photo Frame,3,9,8
 Homewares,Storage Box,6,7,9
 Kitchen Utensils and Crockery,Cutlery Set,7,9,10

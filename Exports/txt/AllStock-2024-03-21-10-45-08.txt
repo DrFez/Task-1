@@ -1,0 +1,33 @@
+Category: Business Attire
+Blouse: 1
+Suit: 1
+Tie: 4
+
+Category: Casual Clothes
+Jeans: 3
+T-shirt: 2
+
+Category: Electrical Items
+Coffee Maker: 7
+Toaster: 3
+
+Category: Homewares
+Lamp: 2
+Photo Frame: 9
+Storage Box: 7
+
+Category: Kitchen Utensils and Crockery
+Cutlery Set: 9
+Plates: 8
+
+Category: Linen
+Bedsheets: 4
+Handcloth: 6
+Pillow Case: 3
+Tablecloth: 3
+Towels: 2
+
+Category: Workwear
+Pants: 438
+Shirt: 10
+

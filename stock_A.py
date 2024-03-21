@@ -318,7 +318,7 @@ def manage_stock():
             print("\033[1m" + "Invalid choice. Please enter 1, 2, or 3.")
             print("\033[0m" + """""")
         else:
-            edit_stock_name = input("Enter the name of the item you want to edit: ")
+            edit_stock_name = input("Enter the name of the item you want to edit: ").lower().capitalize()
             edit_stock_amount = input("Enter the new stock amount: ")
             # Calls the edit_stock function with the item name and new stock amount as arguments
             edit_stock(edit_stock_name, edit_stock_amount)

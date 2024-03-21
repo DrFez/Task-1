@@ -2,7 +2,6 @@ import os
 import csv
 
 
-
 # What this file does:
 # This file allows the admin to view, add, delete, and edit items in the items.csv file.
 
@@ -237,7 +236,7 @@ def add_new_item():
                 
     print("Categories: ", categories)
 
-    category = input("Enter the category: ")
+    category = input("Enter the category: ").lower().capitalize()
 
     if category == 'exit':
         items_menu()
@@ -253,7 +252,7 @@ def add_new_item():
                     items.append(item)
     print("Items: ", items)
 
-    item = input("Enter the item: ")
+    item = input("Enter the item: ").lower().capitalize()
     # Checks if the item already exists in the category
     if item == 'exit':
         items_menu()
@@ -380,7 +379,7 @@ def edit__exist_item():
         items_menu()
 
     # Get the item to edit from the user
-    item_to_edit = input("Enter the name of the item to edit: ")
+    item_to_edit = input("Enter the name of the item to edit: ").lower().capitalize()
     if item_to_edit == 'exit':
         items_menu()
     # Ask if you want to edit the name or the price

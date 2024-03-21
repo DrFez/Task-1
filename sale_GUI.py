@@ -60,7 +60,7 @@ def process_sale():
                 messagebox.showerror("Error", "Item not found in the inventory!")
 
     def finish_sale():
-        receipt_filename = f"Receipts/{datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.csv"
+        receipt_filename = f"Receipts/{datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.txt"
         with open(receipt_filename, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([f"Date and Time: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"])
@@ -84,6 +84,26 @@ def process_sale():
                 return
 
         messagebox.showinfo("Success", f"Sale completed. Receipt saved as: {receipt_filename}")
+
+        # Update the stock for each item in the CSV file
+        with open('CSV_Files/items.csv', 'r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)  # Read all rows into a list
+            for item in items_listbox.get(0, tk.END):
+                item_info = item.split(" - ")
+                item_name = item_info[0]
+                item_quantity = int(item_info[1])
+                for row in rows:
+                    if item_name.lower() == row[1].lower():
+                        stock = int(row[3])
+                        stock -= item_quantity
+                        row[3] = str(stock)
+
+        # Write the updated rows back to the CSV file
+        with open('CSV_Files/items.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(rows)
+
         root.destroy()
         import main_menu
         main_menu.main_menu()
@@ -162,6 +182,11 @@ def process_sale():
         
     root = tk.Tk()
     root.title("Sales Processing")
+
+    # Bring the window to the front
+    root.attributes('-topmost', 1)
+    root.after_idle(root.attributes, '-topmost', 0)
+
 
     total_price = 0
 

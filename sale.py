@@ -116,12 +116,25 @@ def process_sale():
                     # Ask if it was cash or card
                     payment = input("Was the payment made by cash or card?\n1. Cash\n2. Card\nEnter your choice (1/2): ")
                     
+                    # Update stock levels in the items.csv file
+                    with open('CSV_Files/items.csv', 'r') as file:
+                        reader = csv.reader(file)
+                        # For every item in the list of items
+                        for i in range(len(items)):
+                            # For every row in the items.csv file
+                            for row in reader:
+                                # If the item is found in the items.csv file
+                                if items[i][1] == row[1]:
+                                    # Update the stock level of the item
+                                    row[3] = int(row[3]) - quantities[i]
+                                    break
+                    
                     # Create the 'Receipts' directory if it doesn't exist
                     if not os.path.exists('Receipts'):
                         os.makedirs('Receipts')
 
                     # Create a receipt file with the current date and time as the name
-                    receipt_filename = f"Receipts/{datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.csv"
+                    receipt_filename = f"Receipts/{datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.txt"
                     with open(receipt_filename, 'w', newline='') as file:
                         writer = csv.writer(file)
                         # Write the current date and time to the file
