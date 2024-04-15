@@ -1,0 +1,182 @@
+Function main_menu():
+    # Display main menu options
+    Display "Main Menu"
+    Display "1. Add New Item"
+    Display "2. Update Prices"
+    Display "3. Process Purchase"
+    Display "4. Generate Receipt"
+    Display "5. Exit"
+    
+    # Prompt the user to select an option
+    user_choice = Get user input
+
+    # Handle the user's choice
+    If user_choice == 1:
+        Call add_new_item()
+    Else if user_choice == 2:
+        Call update_prices()
+    Else if user_choice == 3:
+        Call process_purchase()
+    Else if user_choice == 4:
+        Call generate_receipt()
+    Else if user_choice == 5:
+        # Exit the application
+        Display "Exiting the application..."
+        Return
+    Else:
+        # Invalid choice, prompt the user again
+        Display "Invalid choice, please select a valid option."
+        Call main_menu()
+
+End Function
+
+Function add_new_item():
+    # Prompt the user to enter the name of the new item
+    Display "Enter the name of the new item:"
+    item_name = Get user input
+    
+    # Prompt the user to enter the category of the new item
+    Display "Enter the category of the new item:"
+    item_category = Get user input
+    
+    # Prompt the user to enter the price of the new item
+    Display "Enter the price of the new item:"
+    item_price = Get user input
+    
+    # Validate the entered price
+    If item_price is not a positive number:
+        Display "Invalid price. Please enter a positive number."
+        Return
+    
+    # Add the new item to the inventory
+    # Use a data structure such as a list or dictionary to store inventory information
+    Add item to inventory with the following details:
+        - Name: item_name
+        - Category: item_category
+        - Price: item_price
+        
+    # Provide feedback to the user on successful addition
+    Display "Item successfully added to inventory."
+    
+    # Return to the main menu
+    Return to main menu
+
+End Function
+
+Function update_prices():
+    # Prompt the user to enter the name of the item to update
+    Display "Enter the name of the item you want to update the price for:"
+    item_name = Get user input
+    
+    # Check if the item exists in the inventory
+    If item_name not in inventory:
+        Display "Item not found in the inventory."
+        Return to main menu
+        
+    # Prompt the user to enter the new price for the item
+    Display "Enter the new price for the item:"
+    new_price = Get user input
+    
+    # Validate the entered new price
+    If new_price is not a positive number:
+        Display "Invalid price. Please enter a positive number."
+        Return to main menu
+    
+    # Update the price of the item in the inventory
+    Update item in inventory with new price:
+        inventory[item_name].price = new_price
+        
+    # Provide feedback to the user on successful price update
+    Display "Price updated successfully for item:", item_name
+    
+    # Return to the main menu
+    Return to main menu
+
+End Function
+
+Function process_purchase():
+    # Initialize total amount and a list to store purchased items and their details
+    total_amount = 0
+    purchased_items = []
+
+    # Start a loop to process each item in the purchase
+    While True:
+        # Prompt the user to enter the name of the item
+        Display "Enter the name of the item (or 'done' to finish):"
+        item_name = Get user input
+        
+        # Break the loop if the user enters 'done'
+        If item_name.lower() == 'done':
+            Break
+        
+        # Check if the item exists in the inventory
+        If item_name not in inventory:
+            Display "Item not found in the inventory. Please try again."
+            Continue
+        
+        # Prompt the user to enter the quantity of the item
+        Display "Enter the quantity of the item:"
+        quantity = Get user input
+        
+        # Validate the quantity
+        If quantity <= 0:
+            Display "Invalid quantity. Please enter a positive number."
+            Continue
+        
+        # Retrieve the price of the item from the inventory
+        item_price = inventory[item_name].price
+        
+        # Calculate the total price for the item (price * quantity)
+        item_total_price = item_price * quantity
+        
+        # Add the item to the purchased_items list with its details
+        purchased_items.append({
+            'name': item_name,
+            'quantity': quantity,
+            'price': item_price,
+            'total': item_total_price
+        })
+        
+        # Add the item total price to the total amount
+        total_amount += item_total_price
+    
+    # Generate a receipt for the customer
+    Display "Receipt:"
+    For each item in purchased_items:
+        Display item.name + " - " + str(item.quantity) + " x " + str(item.price) + " = " + str(item.total)
+    Display "Total Amount: " + str(total_amount)
+    
+    # Provide feedback to the user on successful purchase processing
+    Display "Purchase processed successfully."
+    
+    # Return to the main menu
+    Return to main menu
+
+End Function
+
+Function generate_receipt(purchased_items, total_amount):
+    # Initialize an empty receipt string
+    receipt = ""
+    
+    # Add store information (e.g., store name, date) to the receipt
+    receipt += "Community Store\n"
+    receipt += "Date: " + Get current date and time + "\n"
+    receipt += "\nReceipt:\n"
+    
+    # Loop through each purchased item and add details to the receipt
+    For each item in purchased_items:
+        receipt += item.name + " - " + str(item.quantity) + " x " + str(item.price) + " = " + str(item.total) + "\n"
+    
+    # Add total amount to the receipt
+    receipt += "\nTotal Amount: " + str(total_amount) + "\n"
+    
+    # Optional: Add any additional information for reimbursement by charities (e.g., store signature)
+    receipt += "\nThank you for shopping with us!"
+    
+    # Display the receipt to the user
+    Display receipt
+    
+    # Return to the main menu
+    Return to main menu
+
+End Function
